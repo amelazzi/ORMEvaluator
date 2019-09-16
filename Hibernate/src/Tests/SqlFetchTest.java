@@ -33,7 +33,7 @@ public class SqlFetchTest implements IFetchTest {
 
         long startNanos = System.nanoTime();
 
-        List rows = this.session.createSQLQuery(query).addEntity(User.class).list();
+        List rows = this.session.createSQLQuery(query).list();
         System.out.println("size : " + rows.size());
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
@@ -86,9 +86,10 @@ public class SqlFetchTest implements IFetchTest {
                     "   where \"public\".publication.id=\"public\".picture.publicationid and picture.extension='png')as b " +
                     "where u.id=b.userid";
         if (this.dbName==DBName.MySQL)
-            query="select * from (select * from mysqldb.user, mysqldb.userinfo where mysqldb.user.id=userinfo.userid) as a," +
-                    "(select * from mysqldb.publication, mysqldb.picture where publication.id=picture.publicationid)as b " +
-                    "where a.id=b.userid";
+            query="select u.id as utilisatorID from mysqldb.user u" +
+                    ", (select * from mysqldb.publication, mysqldb.picture " +
+                    "   where publication.id=picture.publicationid and picture.extension='png')as b " +
+                    "where u.id=b.userid";
 
         long startNanos = System.nanoTime();
 

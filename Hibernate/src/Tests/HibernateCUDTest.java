@@ -43,11 +43,11 @@ public class HibernateCUDTest implements ICUDTest {
             }
         }else{
             startNanos = System.nanoTime();
-            WallAbstract wall = null;
             for(int i=0; i<50; i++){
+                WallAbstract wall = null;
                 if(this.dbName==DBName.PostgreSQL) wall = new DAL.Entities.PostgreSQL.Page();
                 if(this.dbName==DBName.MySQL) wall = new DAL.Entities.MySQL.Page();
-                wall.setId(i+48000);
+                wall.setId(i+49000);
                 wall.setDescription("new Wall");
                 this.session.save(wall);
             }
@@ -74,7 +74,6 @@ public class HibernateCUDTest implements ICUDTest {
             if(this.dbName==DBName.MySQL) wall = new DAL.Entities.MySQL.Page();
             wall.setId(result);
             wall.setDescription("Higher National School");
-
             this.session.save(wall);
         }
 

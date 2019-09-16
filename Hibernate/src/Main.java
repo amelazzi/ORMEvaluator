@@ -5,7 +5,7 @@ import Tests.*;
 
 public class Main {
     public static void main(final String[] args) throws Exception {
-        HibernateConnection hibernateConnection = new HibernateConnection(DBName.PostgreSQL);
+        HibernateConnection hibernateConnection = new HibernateConnection(DBName.MySQL);
         final Session session = hibernateConnection.getSession();
 
         session.clear();
@@ -21,18 +21,18 @@ public class Main {
             session.beginTransaction();
 
             session.clear();
-            HibernateCUDTest hibernateCUDTest = new HibernateCUDTest(DBName.PostgreSQL, session);
+            HibernateCUDTest hibernateCUDTest = new HibernateCUDTest(DBName.MySQL, session);
             cudTest[0]=hibernateCUDTest.insertSingle();
             cudTest[1]=hibernateCUDTest.insertBulk();
             cudTest[2]=hibernateCUDTest.upddateSingle();
-            cudTest[3]=hibernateCUDTest.updateBulk();
-            cudTest[4]=hibernateCUDTest.deleteSingle();
-            cudTest[5]=hibernateCUDTest.deleteBulk();
+            //cudTest[3]=hibernateCUDTest.updateBulk();
+            //cudTest[4]=hibernateCUDTest.deleteSingle();
+            //cudTest[5]=hibernateCUDTest.deleteBulk();
             System.out.println("CUD Test");
             displayArrayCatego.cudArray(cudTest);
 
-            /*session.clear();
-            HqlFetchTest hqlFetchTest = new HqlFetchTest(DBName.PostgreSQL, session);
+            session.clear();
+            HqlFetchTest hqlFetchTest = new HqlFetchTest(DBName.MySQL, session);
             fetchTest[0]=hqlFetchTest.selectById();
             fetchTest[1]=hqlFetchTest.selectAll();
             fetchTest[2]=hqlFetchTest.selectWithConstraints();
@@ -42,7 +42,7 @@ public class Main {
             displayArrayCatego.fetchArray(fetchTest);
 
             session.clear();
-            CriteriaFetchTest criteriaFetchTest = new CriteriaFetchTest(DBName.PostgreSQL, session);
+            CriteriaFetchTest criteriaFetchTest = new CriteriaFetchTest(DBName.MySQL, session);
             fetchTest[0]=criteriaFetchTest.selectById();
             fetchTest[1]=criteriaFetchTest.selectAll();
             fetchTest[2]=criteriaFetchTest.selectWithConstraints();
@@ -52,7 +52,7 @@ public class Main {
             displayArrayCatego.fetchArray(fetchTest);
 
             session.clear();
-            SqlFetchTest sqlFetchTest = new SqlFetchTest(DBName.PostgreSQL, session);
+            SqlFetchTest sqlFetchTest = new SqlFetchTest(DBName.MySQL, session);
             fetchTest[0]=sqlFetchTest.selectById();
             fetchTest[1]=sqlFetchTest.selectAll();
             fetchTest[2]=sqlFetchTest.selectWithConstraints();
@@ -62,7 +62,7 @@ public class Main {
             displayArrayCatego.fetchArray(fetchTest);
 
             session.clear();
-            HibernateStreamTest hibernateStreamTest = new HibernateStreamTest(DBName.PostgreSQL, session);
+            HibernateStreamTest hibernateStreamTest = new HibernateStreamTest(DBName.MySQL, session);
             fetchTest[0]=hibernateStreamTest.selectById();
             fetchTest[1]=hibernateStreamTest.selectAll();
             fetchTest[2]=hibernateStreamTest.selectWithConstraints();
@@ -72,12 +72,12 @@ public class Main {
             displayArrayCatego.fetchArray(fetchTest);
 
             session.clear();
-            HibernateFunctionsTest hibernateFunctionsTest = new HibernateFunctionsTest(DBName.PostgreSQL, session);
+            HibernateFunctionsTest hibernateFunctionsTest = new HibernateFunctionsTest(DBName.MySQL, session);
             functionTest[0] = hibernateFunctionsTest.storedProceduresTest();
             functionTest[1] = hibernateFunctionsTest.inheritenceTest();
             functionTest[2] = hibernateFunctionsTest.associationTest();
             System.out.println("Function Test");
-            displayArrayCatego.functionArray(functionTest);*/
+            displayArrayCatego.functionArray(functionTest);
 
         } finally {
             hibernateConnection.closeSession(session);
