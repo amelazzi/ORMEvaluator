@@ -24,7 +24,7 @@ public class HqlFetchTest implements IFetchTest {
         //Select User
 
         long startNanos = System.nanoTime();
-        Query query = this.session.createQuery("From User WHERE ID=321");
+        this.session.createQuery("From User WHERE ID=321");
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         return time;
@@ -36,7 +36,8 @@ public class HqlFetchTest implements IFetchTest {
 
         long startNanos = System.nanoTime();
 
-        List users = this.session.createQuery("From User").list();
+        List rows = this.session.createQuery("From User ").list();
+        System.out.println("size: " + rows.size());
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         return time;
@@ -47,7 +48,8 @@ public class HqlFetchTest implements IFetchTest {
         //Select Female Users
 
         long startNanos = System.nanoTime();
-        List users = this.session.createQuery("From User where sexe='Female'").list();
+        List rows = this.session.createQuery("From User where sexe='Female'").list();
+        System.out.println("size: " + rows.size());
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         return time;
@@ -60,9 +62,11 @@ public class HqlFetchTest implements IFetchTest {
 
         long startNanos = System.nanoTime();
 
-        List users = this.session.createQuery("select user " +
+        List rows = this.session.createQuery("select user " +
                 "from User user,Publication publication, Picture picture " +
                 "where publication.id=picture.id and user.id=picture.user.id").list();
+
+        System.out.println("size: " + rows.size());
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         return time;
@@ -74,11 +78,12 @@ public class HqlFetchTest implements IFetchTest {
 
         long startNanos = System.nanoTime();
 
-        List users = this.session.createQuery("select user.sexe, count(user.id) " +
+        List rows = this.session.createQuery("select user.sexe, count(user.id) " +
                 "from User user,Publication publication, Reaction reaction " +
                 "where user.id=publication.user.id and user.id=reaction.user.id and reaction.publication.id=publication.id " +
                 "group by user.sexe " +
                 "order by count (user.id) desc").list();
+        System.out.println("size: " + rows.size());
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
         return time;

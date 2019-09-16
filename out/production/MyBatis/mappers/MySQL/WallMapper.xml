@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Wall">
+    <resultMap id = "wallResult" type = "DAL.MySQL.Wall">
+        <result property = "id" column = "id"/>
+        <result property = "description" column = "description"/>
+        <result property = "wallType" column = "walltype"/>
+        <collection property="publications" ofType="DAL.MySQL.Publication"/>
+        <discriminator javaType="int" column="walltype">
+            <case value="1" resultMap="DAL.MySQL.Page"></case>
+            <case value="2" resultMap="DAL.MySQL.Group"></case>
+        </discriminator>
+    </resultMap>
+
+
+    <select id = "getAll" resultMap = "wallResult">
+        SELECT * FROM mysqldb.wall
+    </select>
+
+    <select id = "getById" parameterType="int" resultMap = "wallResult">
+        SELECT * FROM mysqldb.wall WHERE id=#{id};
+    </select>
+
+    <insert id = "insert" parameterType = "DAL.MySQL.Wall"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.wall (id, description, walltype)
+            VALUES (#{id},#{description}, #{wallType});
+    </insert>
+</mapper>

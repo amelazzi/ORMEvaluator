@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Post">
+    <resultMap id = "postResult" type = "DAL.MySQL.Post" extends="DAL.MySQL.Publication.publicationResult"/>
+
+    <select id="getAll"  resultMap="postResult">
+        SELECT * FROM mysqldb.post
+    </select>
+
+    <insert id="insertPublication" parameterType = "DAL.MySQL.Post"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.publication (id, description, date, userid, wallid)
+            VALUES (#{id}, #{description}, #{publicationDate}, #{userid}, #{wallid})
+    </insert>
+
+    <insert id="insertPost" parameterType = "DAL.MySQL.Post"
+            useGeneratedKeys="false">
+        INSERT INTO mysqldb.post (publicationid) VALUES (#{id})
+    </insert>
+
+</mapper>

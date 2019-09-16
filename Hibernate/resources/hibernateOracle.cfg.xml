@@ -18,7 +18,7 @@
         <property name="show_sql">false</property>
 
         <!-- DB schema will be updated if needed -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">validate</property>
 
         <!-- mapping entities -->
         <mapping class="DAL.Entities.Oracle.User"/>

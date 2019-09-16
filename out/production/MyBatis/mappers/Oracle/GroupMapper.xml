@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.Oracle.Group">
+    <resultMap id = "groupResult" type = "DAL.Oracle.Group"
+               extends="DAL.Oracle.Wall.wallResult"/>
+
+    <select id = "getAll" resultMap = "groupResult">
+        SELECT * FROM MACOS.WALL WHERE id=2
+    </select>
+
+
+    <insert id = "insert" parameterType = "DAL.Oracle.Group"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO MACOS.WALL(description, walltype) VALUES (#{description}, 2)
+    </insert>
+
+</mapper>

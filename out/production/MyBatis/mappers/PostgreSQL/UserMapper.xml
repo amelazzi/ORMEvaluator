@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.PostgreSQL.User">
+    <resultMap id = "userResult" type = "DAL.PostgreSQL.User">
+        <result property = "id" column = "id"/>
+        <result property = "firstName" column = "firstname"/>
+        <result property = "lastName" column = "lastname"/>
+        <result property = "email" column = "email"/>
+        <result property = "pwd" column = "pwd"/>
+        <result property = "dateOfBirth" column = "dateofbirth"/>
+        <result property = "sexe" column = "sexe"/>
+        <result property = "userType" column = "usertype"/>
+        <collection property="messages" ofType="DAL.PostgreSQL.Message"/>
+        <collection property="publications" ofType="DAL.PostgreSQL.Publication"/>
+        <collection property="reactions" ofType="DAL.PostgreSQL.Reaction"/>
+        <collection property="friends" ofType="DAL.PostgreSQL.User"/>
+        <collection property="friendOf" ofType="DAL.PostgreSQL.User"/>
+    </resultMap>
+
+    <select id = "getAll" resultMap = "userResult">
+        SELECT * FROM "public"."user", "public".userinfo where "user".id=userinfo.userid;
+    </select>
+
+
+    <select id = "getById" parameterType="int" resultMap = "userResult">
+        SELECT * FROM "public"."user" WHERE id=#{id};
+    </select>
+
+    <select id = "getFemale" resultMap = "userResult">
+        SELECT * FROM "public"."user", "public".userinfo where "user".id=userinfo.userid and userinfo.sexe='Female';
+    </select>
+
+    <select id = "getUserPicture" resultMap = "userResult">
+        SELECT * from "public"."user", "public".userinfo, "public".publication, "public".picture
+        WHERE "user".id=userinfo.userid AND "user".id=publication.userid AND publication.id=picture.publicationid;
+    </select>
+
+    <select id="getReactionCount" resultMap="userResult">
+        SELECT userinfo.sexe, COUNT(userinfo.userid)
+        FROM "public".userinfo, "public".publication, "public".reaction
+        WHERE userinfo.userid=publication.userid AND userinfo.userid=reaction.userid AND publication.id=reaction.publicationid
+        GROUP BY userinfo.sexe
+        ORDER BY COUNT(userinfo.userid)
+    </select>
+
+    <insert id = "insert" parameterType = "DAL.PostgreSQL.User"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT nextVal('my_sequence');
+        </selectKey>
+        INSERT INTO "public"."user" (id, firstname, lastname, email, pwd, usertype)
+            VALUES (#{id},#{firstName}, #{lastName}, #{email}, #{pwd}, #{userType});
+        INSERT INTO "public".userinfo (userid, dateofbirth, sexe, address)
+            VALUES (#{id}, #{dateOfBirth}, #{sexe}, #{address, jdbcType=OTHER, typeHandler=DAL.PostgreSQL.AddressTypeHandler});
+    </insert>
+
+    <update id="update" parameterType="DAL.PostgreSQL.User">
+      UPDATE "public"."user" SET
+        email = #{email}
+      WHERE ID = #{id};
+    </update>
+
+    <insert id="insertFriend" parameterType="map">
+        INSERT INTO "public".user_user (userid1, userid2)
+            VALUES (#{user1.id},#{user2.id});
+    </insert>
+
+    <insert id="insertFriendOf" parameterType="map">
+        INSERT INTO "public".user_user (userid1, userid2)
+            VALUES (#{user2.id},#{user1.id});
+    </insert>
+
+
+</mapper>

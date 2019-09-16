@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.PageAdmin">
+    <resultMap id = "pageAdminResult" type = "DAL.MySQL.PageAdmin" extends="DAL.MySQL.User.userResult"/>
+
+    <select id = "getAll" resultMap = "pageAdminResult">
+        SELECT * FROM "public"."user" where usertype=2
+    </select>
+
+    <select id = "getById" parameterType="int" resultMap = "pageAdminResult">
+        SELECT * FROM mysqldb.user WHERE id=#{id}
+    </select>
+
+
+    <insert id = "insert" parameterType = "DAL.MySQL.PageAdmin"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.user (id, firstname, lastname, email, pwd, usertype)
+            VALUES (#{id},#{firstName}, #{lastName}, #{email}, #{pwd}, 2);
+    </insert>
+
+    <insert id="insertAddress" parameterType="DAL.MySQL.Address"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO address(id, streetnbr, cityname, zipcode)
+            VALUES (#{id}, #{streetNbr}, #{cityName}, #{zipCode});
+    </insert>
+
+    <insert id="insertUserInfo" parameterType = "map"
+            useGeneratedKeys="false">
+        INSERT INTO mysqldb.userinfo (userid, dateofbirth, sexe, addressid)
+            VALUES (#{user.id}, #{user.dateOfBirth}, #{user.sexe}, #{address.id});
+    </insert>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Page">
+    <resultMap id = "pageResult" type = "DAL.MySQL.Page" extends="DAL.MySQL.Wall.wallResult"/>
+
+    <select id = "getAll" resultMap = "pageResult">
+        SELECT * FROM mysqldb.wall where walltype=1
+    </select>
+
+    <insert id = "callInsertWall" parameterType = "DAL.PostgreSQL.Page" statementType = "CALLABLE">
+        {CALL insertwall(#{id}, #{description}, 1)}
+    </insert>
+
+    <insert id = "insert" parameterType = "DAL.MySQL.Page"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.wall (id, description, walltype)
+            VALUES (#{id},#{description}, 1);
+    </insert>
+</mapper>

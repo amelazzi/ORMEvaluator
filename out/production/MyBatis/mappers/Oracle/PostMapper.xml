@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.Oracle.Post">
+    <resultMap id = "postResult" type = "DAL.Oracle.Post"
+               extends="DAL.Oracle.Publication.publicationResult"/>
+
+    <select id="getAll" resultMap="postResult">
+        SELECT * FROM MACOS.POST
+    </select>
+
+    <select id="getById" parameterType="int" resultMap="postResult">
+        SELECT * FROM MACOS.POST WHERE publicationid=#{id}
+    </select>
+
+    <insert id="insertPublication" parameterType = "DAL.Oracle.Post"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO MACOS.PUBLICATION (description, userid, wallid, PUBLICATIONDATE)
+            VALUES (#{description}, #{userid}, #{wallid}, #{publicationDate})
+    </insert>
+
+    <insert id="insertPost" parameterType = "DAL.Oracle.Post"
+            useGeneratedKeys="false">
+        INSERT INTO MACOS.POST (publicationid)
+            VALUES (#{id})
+    </insert>
+</mapper>

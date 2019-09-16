@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.PostgreSQL.Admin">
+    <resultMap id = "adminResult" type = "DAL.PostgreSQL.Admin" extends="DAL.PostgreSQL.User.userResult"/>
+
+    <select id = "getAll" resultMap = "adminResult">
+        SELECT * FROM "public"."user" where usertype=1
+    </select>
+
+    <insert id = "insert" parameterType = "DAL.PostgreSQL.Admin" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT nextVal('my_sequence');
+        </selectKey>
+        INSERT INTO "public"."user" (id, firstname, lastname, email, pwd, usertype) VALUES (#{id},#{firstName}, #{lastName}, #{email}, #{pwd}, 1);
+        INSERT INTO "public".userinfo (userid, dateofbirth, sexe, address) values (#{id}, #{dateOfBirth}, #{sexe}, #{address, jdbcType=OTHER, typeHandler=DAL.PostgreSQL.AddressTypeHandler});
+    </insert>
+</mapper>

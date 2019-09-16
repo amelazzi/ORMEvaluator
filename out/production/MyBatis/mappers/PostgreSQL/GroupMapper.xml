@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.PostgreSQL.Group">
+    <resultMap id = "groupResult" type = "DAL.PostgreSQL.Group"
+               extends="DAL.PostgreSQL.Wall.wallResult"/>
+
+    <select id = "getAll" resultMap = "groupResult">
+        SELECT * FROM "public".wall where walltype=2
+    </select>
+
+
+    <insert id = "insert" parameterType = "DAL.PostgreSQL.Group"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT nextVal('my_sequence');
+        </selectKey>
+        INSERT INTO "public".wall (id, description, walltype) VALUES (#{id},#{description}, 2);
+    </insert>
+
+</mapper>

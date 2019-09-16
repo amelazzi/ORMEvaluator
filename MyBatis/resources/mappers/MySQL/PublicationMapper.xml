@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Publication">
+    <resultMap id = "publicationResult" type = "DAL.MySQL.Publication" >
+        <result property = "id" column = "id"/>
+        <result property = "description" column = "description"/>
+        <result property = "date" column = "date"/>
+        <result property = "userid" column = "userid"/>
+        <result property = "wallid" column = "wallid"/>
+        <collection property="reactions" ofType="DAL.MySQL.Reaction"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="publicationResult">
+        SELECT * from mysqldb.publication
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.Oracle.Wall">
+    <resultMap id = "wallResult" type = "DAL.Oracle.Wall">
+        <result property = "id" column = "id"/>
+        <result property = "description" column = "description"/>
+        <result property = "wallType" column = "walltype"/>
+        <collection property="publications" ofType="DAL.Oracle.Publication"/>
+        <discriminator javaType="int" column="walltype">
+            <case value="1" resultMap="DAL.Oracle.Page"></case>
+            <case value="2" resultMap="DAL.Oracle.Group"></case>
+        </discriminator>
+    </resultMap>
+
+    <select id = "getAll" resultMap = "wallResult">
+        SELECT * FROM MACOS.WALL
+    </select>
+
+
+    <select id = "getById" parameterType="int" resultMap = "wallResult">
+        SELECT * FROM MACOS.WALL WHERE id=#{id}
+    </select>
+
+
+    <insert id = "insert" parameterType = "DAL.Oracle.Wall"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO MACOS.WALL(id, description, walltype) VALUES (#{id},#{description}, 0)
+    </insert>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.PostgreSQL.Post">
+    <resultMap id = "postResult" type = "DAL.PostgreSQL.Post" extends="DAL.PostgreSQL.Publication.publicationResult"/>
+
+    <select id="getAll"  resultMap="postResult">
+        SELECT * FROM "public".post
+    </select>
+
+    <insert id="insert" parameterType="DAL.PostgreSQL.Post"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT nextVal('my_sequence');
+        </selectKey>
+        INSERT INTO "public".publication (id, description, date, userid, wallid)
+            VALUES (#{id}, #{description}, #{date}, #{userid}, #{wallid});
+        INSERT INTO "public".post (publicationid)
+            VALUES (#{id});
+    </insert>
+</mapper>

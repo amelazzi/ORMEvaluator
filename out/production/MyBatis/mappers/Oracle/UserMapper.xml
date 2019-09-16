@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.Oracle.User">
+    <resultMap id = "userResult" type = "DAL.Oracle.User">
+        <result property = "id" column = "id"/>
+        <result property = "firstName" column = "firstname"/>
+        <result property = "lastName" column = "lastname"/>
+        <result property = "email" column = "email"/>
+        <result property = "pwd" column = "pwd"/>
+        <result property = "dateOfBirth" column = "dateofbirth"/>
+        <result property = "userType" column = "usertype"/>
+        <collection property="messages" ofType="DAL.Oracle.Message"/>
+        <collection property="publications" ofType="DAL.Oracle.Publication"/>
+        <collection property="reactions" ofType="DAL.Oracle.Reaction"/>
+        <collection property="friends" ofType="DAL.Oracle.User"/>
+        <collection property="friendOf" ofType="DAL.Oracle.User"/>
+    </resultMap>
+
+    <select id = "getAll" resultMap = "userResult">
+        SELECT * FROM UTILISATOR, MACOS.USERINFO WHERE UTILISATOR.ID=USERINFO.USERID
+    </select>
+
+
+    <select id = "getById" parameterType="int" resultMap = "userResult">
+        SELECT * FROM UTILISATOR WHERE id=#{id}
+    </select>
+
+    <select id = "getFemale" resultMap = "userResult">
+        SELECT * FROM UTILISATOR, MACOS.USERINFO where UTILISATOR.id=USERINFO.userid and USERINFO.sexe='Female'
+    </select>
+
+    <select id = "getUserPicture" resultMap = "userResult">
+        SELECT * from UTILISATOR, MACOS.USERINFO, MACOS.PUBLICATION, MACOS.PICTURE
+        WHERE UTILISATOR.ID=USERINFO.USERID AND UTILISATOR.ID=PUBLICATION.USERID AND PUBLICATION.ID=PICTURE.PUBLICATIONID
+    </select>
+
+    <select id="getReactionCount" resultMap="userResult">
+        SELECT USERINFO.SEXE, COUNT(USERINFO.USERID)
+        FROM MACOS.USERINFO, MACOS.PUBLICATION, MACOS.REACTION
+        WHERE USERINFO.USERID=PUBLICATION.USERID AND USERINFO.USERID=REACTION.USERID AND PUBLICATION.ID=REACTION.PUBLICATIONID
+        GROUP BY USERINFO.sexe
+        ORDER BY COUNT(USERINFO.USERID)
+    </select>
+
+
+    <insert id = "insert" parameterType = "DAL.Oracle.User"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO MACOS.UTILISATOR (FIRSTNAME, LASTNAME, EMAIL, PWD, USERTYPE)
+            VALUES (#{firstName}, #{lastName}, #{email}, #{pwd}, 0)
+    </insert>
+
+    <insert id = "insertUserInfo" parameterType = "DAL.Oracle.User"
+            useGeneratedKeys="false" keyProperty="id" keyColumn="id">
+        INSERT INTO MACOS.USERINFO (userid, dateofbirth, sexe, address)
+            VALUES (#{id}, #{dateOfBirth}, #{sexe}, #{address, jdbcType=OTHER, typeHandler=DAL.Oracle.AddressTypeHandler})
+    </insert>
+
+    <update id="update" parameterType="DAL.Oracle.User">
+      UPDATE UTILISATOR SET
+        email = #{email}
+      WHERE ID = #{id}
+    </update>
+
+    <insert id="insertFriend" parameterType="map">
+        INSERT INTO MACOS.USER_USER (userid1, userid2)
+            VALUES (#{user1.id},#{user2.id})
+    </insert>
+
+    <insert id="insertFriendOf" parameterType="map">
+        INSERT INTO MACOS.USER_USER(userid1, userid2)
+            VALUES (#{user2.id},#{user1.id})
+    </insert>
+
+
+</mapper>

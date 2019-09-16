@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Group">
+    <resultMap id = "groupResult" type = "DAL.MySQL.Group" extends="DAL.MySQL.Wall.wallResult"/>
+
+    <select id = "getAll" resultMap = "groupResult">
+        SELECT * FROM mysqldb.wall where walltype=2
+    </select>
+
+
+    <insert id = "insert" parameterType = "DAL.MySQL.Group"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.wall (id, description, walltype)
+            VALUES (#{id},#{description}, 2);
+    </insert>
+</mapper>

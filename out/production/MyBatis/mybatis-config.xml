@@ -46,4 +46,47 @@
         </environment>
     </environments>
 
+    <mappers>
+        <mapper resource="mappers/Oracle/UserMapper.xml"/>
+        <mapper resource="mappers/Oracle/AdminMapper.xml"/>
+        <mapper resource="mappers/Oracle/PageAdminMapper.xml"/>
+        <mapper resource="mappers/Oracle/MessageMapper.xml"/>
+        <mapper resource="mappers/Oracle/WallMapper.xml"/>
+        <mapper resource="mappers/Oracle/PageMapper.xml"/>
+        <mapper resource="mappers/Oracle/GroupMapper.xml"/>
+        <mapper resource="mappers/Oracle/PublicationMapper.xml"/>
+        <mapper resource="mappers/Oracle/PostMapper.xml"/>
+        <mapper resource="mappers/Oracle/PictureMapper.xml"/>
+        <mapper resource="mappers/Oracle/VideoMapper.xml"/>
+        <mapper resource="mappers/Oracle/ReactionMapper.xml"/>
+
+        <mapper resource="mappers/PostgreSQL/UserMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/AdminMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/PageAdminMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/MessageMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/WallMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/PageMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/GroupMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/PublicationMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/PostMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/PictureMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/VideoMapper.xml"/>
+        <mapper resource="mappers/PostgreSQL/ReactionMapper.xml"/>
+
+        <mapper resource="mappers/MySQL/UserMapper.xml"/>
+        <mapper resource="mappers/MySQL/AdminMapper.xml"/>
+        <mapper resource="mappers/MySQL/PageAdminMapper.xml"/>
+        <mapper resource="mappers/MySQL/MessageMapper.xml"/>
+        <mapper resource="mappers/MySQL/WallMapper.xml"/>
+        <mapper resource="mappers/MySQL/PageMapper.xml"/>
+        <mapper resource="mappers/MySQL/GroupMapper.xml"/>
+        <mapper resource="mappers/MySQL/PublicationMapper.xml"/>
+        <mapper resource="mappers/MySQL/PostMapper.xml"/>
+        <mapper resource="mappers/MySQL/PictureMapper.xml"/>
+        <mapper resource="mappers/MySQL/VideoMapper.xml"/>
+        <mapper resource="mappers/MySQL/ReactionMapper.xml"/>
+
+
+    </mappers>
+
 </configuration>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Video">
+    <resultMap id = "videoResult" type = "DAL.MySQL.Video"
+               extends="DAL.MySQL.Publication.publicationResult">
+        <result property = "id" column = "publicationid"/>
+        <result property = "name" column = "name"/>
+        <result property = "extension" column = "extension"/>
+    </resultMap>
+
+    <select id="getAll"  resultMap="videoResult">
+        SELECT * FROM mysqldb.video
+    </select>
+
+    <insert id="insertPublication" parameterType = "DAL.MySQL.Video"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.publication (id, description, date, userid, wallid)
+            VALUES (#{id}, #{description}, #{publicationDate}, #{userid}, #{wallid})
+    </insert>
+
+    <insert id="insertVideo" parameterType = "DAL.MySQL.Video"
+            useGeneratedKeys="false">
+        INSERT INTO mysqldb.video (publicationid, name, extension)
+            VALUES (#{id}, #{name}, #{extension})
+    </insert>
+</mapper>

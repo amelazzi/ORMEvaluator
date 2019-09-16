@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Reaction">
+    <resultMap id = "reactionResult" type = "DAL.MySQL.Reaction">
+        <result property = "id" column = "id"/>
+        <result property = "reactionDate" column = "reactiondate"/>
+        <result property = "type" column = "type"/>
+        <result property = "publicationid" column = "publicationid"/>
+        <result property = "userid" column = "userid"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="reactionResult">
+        SELECT * from mysqldb.reaction
+    </select>
+
+    <select id="getUserReactions" parameterType="int" resultMap="reactionResult">
+        SELECT * FROM mysqldb.reactionWHERE userid=#{id}
+    </select>
+
+    <select id="getPublicationReactions" parameterType="int" resultMap="reactionResult">
+        SELECT * FROM mysqldb.reaction WHERE publicationid=#{id}
+    </select>
+
+    <insert id="insert" parameterType = "DAL.MySQL.Reaction"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.reaction(id, reactiondate, type, userid, publicationid)
+            VALUES (#{id}, #{reactionDate}, #{type}, #{userid}, #{publicationid});
+    </insert>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.Oracle.Video">
+    <resultMap id = "videoResult" type = "DAL.Oracle.Video"
+               extends="DAL.Oracle.Publication.publicationResult">
+        <result property = "id" column = "publicationid"/>
+        <result property = "name" column = "name"/>
+        <result property = "extension" column = "extension"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="videoResult">
+        SELECT * FROM MACOS.VIDEO
+    </select>
+
+    <select id="getById" parameterType="int" resultMap="videoResult">
+        SELECT * FROM MACOS.VIDEO WHERE publicationid=#{id}
+    </select>
+
+    <insert id="insertPublication" parameterType = "DAL.Oracle.Video"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO MACOS.PUBLICATION (description, userid, wallid, PUBLICATIONDATE)
+            VALUES (#{description}, #{userid}, #{wallid}, #{publicationDate})
+    </insert>
+
+    <insert id="insertVideo" parameterType = "DAL.Oracle.Video"
+            useGeneratedKeys="false">
+        INSERT INTO MACOS.VIDEO (publicationid, name, extension)
+            VALUES (#{id}, #{name}, #{extension})
+    </insert>
+</mapper>

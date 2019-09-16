@@ -27,13 +27,13 @@ public class SqlFetchTest implements IFetchTest {
         if(this.dbName==DBName.PostgreSQL)
             query = "SELECT * FROM \"public\".\"user\", \"public\".userinfo WHERE \"user\".id=userinfo.userid and \"user\".id=1311";
         if(this.dbName==DBName.MySQL)
-            query = "select * from mysqldb.user, mysqldb.userinfo where user.id=userinfo.userid and user.id=140";
+            query = "select * from mysqldb.user, mysqldb.userinfo where user.id=userinfo.userid and user.id=1311";
         if(this.dbName==DBName.Oracle)
             query="";
 
         long startNanos = System.nanoTime();
 
-        List rows = this.session.createSQLQuery(query).list();
+        List rows = this.session.createSQLQuery("select * from UTILISATOR, MACOS.USERINFO where UTILISATOR..id = USERINFO.USERID and UTILISATOR.ID=1311").list();
         System.out.println("size : " + rows.size());
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
@@ -52,7 +52,8 @@ public class SqlFetchTest implements IFetchTest {
 
         long startNanos = System.nanoTime();
 
-        List list  = this.session.createSQLQuery(query).list();
+        List rows  = this.session.createSQLQuery(query).list();
+        System.out.println("size: " + rows.size());
 
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);
@@ -67,6 +68,8 @@ public class SqlFetchTest implements IFetchTest {
                     "where u.id=userinfo.userid and userinfo.sexe='Female'";
         if (this.dbName==DBName.MySQL)
             query="select * from mysqldb.user, mysqldb.userinfo where user.id=userinfo.userid and userinfo.sexe='Female'";
+        if (this.dbName==DBName.Oracle)
+            query="select * from UTILISATOR, MACOS.USERINFO where UTILISATOR.id=USERINFO.userid and USERINFO.sexe='Female'";
 
         long startNanos = System.nanoTime();
 
@@ -90,6 +93,11 @@ public class SqlFetchTest implements IFetchTest {
                     ", (select * from mysqldb.publication, mysqldb.picture " +
                     "   where publication.id=picture.publicationid and picture.extension='png')as b " +
                     "where u.id=b.userid";
+        if (this.dbName==DBName.Oracle)
+            query="select u.id as utilisatorID from UTILISATOR u" +
+                    ", (select * from MACOS.PUBLICATION, MACOS.PICTURE" +
+                    "   where PUBLICATION.ID=PICTURE.PUBLICATIONID and PICTURE.EXTENSION='png')as b " +
+                    "where u.id=b.userid";
 
         long startNanos = System.nanoTime();
 
@@ -112,6 +120,12 @@ public class SqlFetchTest implements IFetchTest {
         if(this.dbName==DBName.MySQL)
             query="select userinfo.sexe, count(userinfo.userid) " +
                     "from mysqldb.userinfo userinfo, mysqldb.publication publication, mysqldb.reaction reaction " +
+                    "where userinfo.userid=publication.userid and userinfo.userid=reaction.userid and publication.id=reaction.publicationid " +
+                    "group by userinfo.sexe " +
+                    "order by count(userinfo.userid)";
+        if(this.dbName==DBName.Oracle)
+            query="select userinfo.sexe, count(userinfo.userid) " +
+                    "from MACOS.USERINFO userinfo, MACOS.PUBLICATION publication, MACOS.REACTION reaction " +
                     "where userinfo.userid=publication.userid and userinfo.userid=reaction.userid and publication.id=reaction.publicationid " +
                     "group by userinfo.sexe " +
                     "order by count(userinfo.userid)";

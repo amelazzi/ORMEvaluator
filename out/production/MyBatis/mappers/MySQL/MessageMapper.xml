@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAL.MySQL.Message">
+    <resultMap id = "messageResult" type = "DAL.MySQL.Message">
+        <result property = "id" column = "id"/>
+        <result property = "text" column = "text"/>
+        <result property = "sendingDate" column = "sendingdate"/>
+        <result property = "seen" column = "seen"/>
+        <result property = "userid" column = "userid"/>
+    </resultMap>
+
+    <select id="getById" resultMap="messageResult">
+        SELECT * from mysqldb.message where id=#{id}
+    </select>
+
+    <select id="getAll" resultMap="messageResult">
+        SELECT * from mysqldb.message
+    </select>
+
+    <select id="getUserMessages" parameterType="int" resultMap="messageResult">
+        SELECT * FROM mysqldb.message WHERE userid=#{id}
+    </select>
+
+    <insert id="insert" parameterType = "DAL.MySQL.Message"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO mysqldb.message(id, text, sendingdate, seen, userid)
+            VALUES (#{id}, #{text}, #{sendingDate}, #{seen}, #{userid});
+    </insert>
+
+    <delete id = "deleteById" parameterType = "int">
+      DELETE from mysqldb.message WHERE id = #{id};
+   </delete>
+
+    <update id="update" parameterType="DAL.MySQL.Message">
+      UPDATE mysqldb.message SET
+        text = #{text}
+      WHERE ID = #{id};
+    </update>
+</mapper>
