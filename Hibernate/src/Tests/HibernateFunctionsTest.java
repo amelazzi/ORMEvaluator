@@ -32,7 +32,7 @@ public class HibernateFunctionsTest implements IFunctionsTest {
     @Override
     public long storedProceduresTest() {
         Random r = new Random();
-        int randomID = r.nextInt(7000-6000) + 6000;
+        int randomID = r.nextInt(70900-60500) + 60500;
         Query query=null;
 
         long startNanos = 0;
@@ -44,7 +44,7 @@ public class HibernateFunctionsTest implements IFunctionsTest {
         }else {
             startNanos = System.nanoTime();
              query = this.session.getNamedQuery("InsertWall")
-                    .setParameter("id", 345154)
+                    .setParameter("id", randomID)
                     .setParameter("description", "NewWall")
                     .setParameter("wallType", 2);
         }

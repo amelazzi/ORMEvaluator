@@ -31,21 +31,23 @@ public class HibernateCUDTest implements ICUDTest {
     @Override
     public long insertBulk() throws ParseException {
         //Insert a bulk of Wall
-        long startNanos = System.nanoTime();
+        long startNanos = 0;
         //Query query = this.session.createQuery("From User");
         if(this.dbName==DBName.Oracle){
+            startNanos = System.nanoTime();
             Wall wall = new Page();
             for(int i=0; i<50; i++){
-                wall.setId(i+8000);
+                wall.setId(i+48000);
                 wall.setDescription("new Wall");
                 this.session.save(wall);
             }
         }else{
+            startNanos = System.nanoTime();
             WallAbstract wall = null;
-            if(this.dbName==DBName.PostgreSQL) wall = new DAL.Entities.PostgreSQL.Page();
-            if(this.dbName==DBName.MySQL) wall = new DAL.Entities.MySQL.Page();
             for(int i=0; i<50; i++){
-                wall.setId(i+8000);
+                if(this.dbName==DBName.PostgreSQL) wall = new DAL.Entities.PostgreSQL.Page();
+                if(this.dbName==DBName.MySQL) wall = new DAL.Entities.MySQL.Page();
+                wall.setId(i+48000);
                 wall.setDescription("new Wall");
                 this.session.save(wall);
             }
@@ -59,7 +61,7 @@ public class HibernateCUDTest implements ICUDTest {
     public long insertSingle() {
         //Insert Wall
         Random r = new Random();
-        int result = r.nextInt(7000-5000) + 5000;
+        int result = r.nextInt(45000-35000) + 35000;
         long startNanos = System.nanoTime();
         if(this.dbName==DBName.Oracle){
             Wall wall = new Page();
@@ -70,8 +72,9 @@ public class HibernateCUDTest implements ICUDTest {
             WallAbstract wall = null;
             if(this.dbName==DBName.PostgreSQL) wall = new DAL.Entities.PostgreSQL.Page();
             if(this.dbName==DBName.MySQL) wall = new DAL.Entities.MySQL.Page();
-
+            wall.setId(result);
             wall.setDescription("Higher National School");
+
             this.session.save(wall);
         }
 
@@ -87,7 +90,7 @@ public class HibernateCUDTest implements ICUDTest {
 
         if(this.dbName==DBName.Oracle){
             List<Message> messages = query.list();
-            for (int i=0; i<1000; i++){
+            for (int i=0; i<50; i++){
             /*if(i % this.batchSize == 0 && i > 0) {
                 this.session.flush();
                 this.session.clear();
@@ -97,7 +100,7 @@ public class HibernateCUDTest implements ICUDTest {
             }
         }else{
             List<MessageAbstract> messages = query.list();
-            for (int i=0; i<1000; i++){
+            for (int i=0; i<50; i++){
             /*if(i % this.batchSize == 0 && i > 0) {
                 this.session.flush();
                 this.session.clear();
@@ -116,7 +119,7 @@ public class HibernateCUDTest implements ICUDTest {
         //Update User
         long startNanos = System.nanoTime();
 
-        Query query = this.session.createQuery("from Message where id=45000");
+        Query query = this.session.createQuery("from Message where id=49518");
         if(this.dbName==DBName.Oracle){
             Message message= (Message) query.getSingleResult();
             message.setText("updated Text");
@@ -145,7 +148,7 @@ public class HibernateCUDTest implements ICUDTest {
 
         if(this.dbName==DBName.Oracle){
             List<Message> messages = query.list();
-            for (int i=0; i<1000; i++){
+            for (int i=0; i<50; i++){
             /*if(i % this.batchSize == 0 && i > 0) {
                 this.session.flush();
                 this.session.clear();
@@ -155,7 +158,7 @@ public class HibernateCUDTest implements ICUDTest {
 
         }else{
             List<MessageAbstract> messages = query.list();
-            for (int i=0; i<1000; i++){
+            for (int i=0; i<50; i++){
             /*if(i % this.batchSize == 0 && i > 0) {
                 this.session.flush();
                 this.session.clear();
@@ -175,11 +178,11 @@ public class HibernateCUDTest implements ICUDTest {
 
         Query query = this.session.createQuery("From Message ");
         if(this.dbName==DBName.Oracle){
-            List<Message> users = query.list();
-            this.session.remove(users.get(0));
+            List<Message> messages = query.list();
+            this.session.remove(messages.get(0));
         }else {
-            List<MessageAbstract> users = query.list();
-            this.session.remove(users.get(0));
+            List<MessageAbstract> messages = query.list();
+            this.session.remove(messages.get(0));
         }
 
         long time =  TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNanos);

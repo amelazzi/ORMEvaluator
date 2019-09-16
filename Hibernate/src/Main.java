@@ -21,8 +21,18 @@ public class Main {
             session.beginTransaction();
 
             session.clear();
+            HibernateCUDTest hibernateCUDTest = new HibernateCUDTest(DBName.PostgreSQL, session);
+            cudTest[0]=hibernateCUDTest.insertSingle();
+            cudTest[1]=hibernateCUDTest.insertBulk();
+            cudTest[2]=hibernateCUDTest.upddateSingle();
+            cudTest[3]=hibernateCUDTest.updateBulk();
+            cudTest[4]=hibernateCUDTest.deleteSingle();
+            cudTest[5]=hibernateCUDTest.deleteBulk();
+            System.out.println("CUD Test");
+            displayArrayCatego.cudArray(cudTest);
 
-            /*HqlFetchTest hqlFetchTest = new HqlFetchTest(DBName.PostgreSQL, session);
+            /*session.clear();
+            HqlFetchTest hqlFetchTest = new HqlFetchTest(DBName.PostgreSQL, session);
             fetchTest[0]=hqlFetchTest.selectById();
             fetchTest[1]=hqlFetchTest.selectAll();
             fetchTest[2]=hqlFetchTest.selectWithConstraints();
@@ -39,7 +49,7 @@ public class Main {
             fetchTest[3]=criteriaFetchTest.selectWithJoins();
             fetchTest[4]=criteriaFetchTest.selectWithJoinsGroupBy();
             System.out.println("Criteria Test");
-            displayArrayCatego.fetchArray(fetchTest);*/
+            displayArrayCatego.fetchArray(fetchTest);
 
             session.clear();
             SqlFetchTest sqlFetchTest = new SqlFetchTest(DBName.PostgreSQL, session);
@@ -51,7 +61,7 @@ public class Main {
             System.out.println("SQL Test");
             displayArrayCatego.fetchArray(fetchTest);
 
-            /*session.clear();
+            session.clear();
             HibernateStreamTest hibernateStreamTest = new HibernateStreamTest(DBName.PostgreSQL, session);
             fetchTest[0]=hibernateStreamTest.selectById();
             fetchTest[1]=hibernateStreamTest.selectAll();
