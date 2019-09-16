@@ -20,5 +20,20 @@
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
 
+        <!-- mapping entities -->
+        <mapping class="DAL.Entities.MySQL.User"/>
+        <mapping class="DAL.Entities.MySQL.Admin"/>
+        <mapping class="DAL.Entities.MySQL.PageAdmin"/>
+        <mapping class="DAL.Entities.MySQL.Address"/>
+        <mapping class="DAL.Entities.MySQL.Message"/>
+        <mapping class="DAL.Entities.MySQL.Publication"/>
+        <mapping class="DAL.Entities.MySQL.Post"/>
+        <mapping class="DAL.Entities.MySQL.Picture"/>
+        <mapping class="DAL.Entities.MySQL.Video"/>
+        <mapping class="DAL.Entities.MySQL.Reaction"/>
+        <mapping class="DAL.Entities.MySQL.Wall"/>
+        <mapping class="DAL.Entities.MySQL.Page"/>
+        <mapping class="DAL.Entities.MySQL.Group"/>
+
     </session-factory>
 </hibernate-configuration>

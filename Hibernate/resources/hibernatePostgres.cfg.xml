@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database Connection Settings -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <property name="connection.url">jdbc:postgresql://localhost:5432/postgresdb</property>
+        <property name="connection.username">macos</property>
+        <property name="connection.password">james-hetfield</property>
+
+        <!-- SQL Dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+
+        <!-- Echo All Executed SQL to stdout -->
+        <property name="show_sql">false</property>
+
+        <!-- DB schema will be updated if needed -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- mapping entities -->
+        <mapping class="DAL.Entities.PostgreSQL.User"/>
+        <mapping class="DAL.Entities.PostgreSQL.Admin"/>
+        <mapping class="DAL.Entities.PostgreSQL.PageAdmin"/>
+        <mapping class="DAL.Entities.PostgreSQL.Message"/>
+        <mapping class="DAL.Entities.PostgreSQL.Publication"/>
+        <mapping class="DAL.Entities.PostgreSQL.Post"/>
+        <mapping class="DAL.Entities.PostgreSQL.Picture"/>
+        <mapping class="DAL.Entities.PostgreSQL.Video"/>
+        <mapping class="DAL.Entities.PostgreSQL.Reaction"/>
+        <mapping class="DAL.Entities.PostgreSQL.Wall"/>
+        <mapping class="DAL.Entities.PostgreSQL.Page"/>
+        <mapping class="DAL.Entities.PostgreSQL.Group"/>
+
+    </session-factory>
+</hibernate-configuration>

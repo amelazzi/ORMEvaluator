@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database Connection Settings -->
+        <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+
+        <property name="connection.url">jdbc:oracle:thin:@localhost:32118:XE</property>
+        <property name="connection.username">macos</property>
+        <property name="connection.password">james-hetfield</property>
+
+        <!-- SQL Dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</property>
+
+        <!-- Echo All Executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- DB schema will be updated if needed -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- mapping entities -->
+        <mapping class="DAL.Entities.Oracle.User"/>
+        <mapping class="DAL.Entities.Oracle.Admin"/>
+        <mapping class="DAL.Entities.Oracle.PageAdmin"/>
+        <mapping class="DAL.Entities.Oracle.Message"/>
+        <mapping class="DAL.Entities.Oracle.Publication"/>
+        <mapping class="DAL.Entities.Oracle.Post"/>
+        <mapping class="DAL.Entities.Oracle.Picture"/>
+        <mapping class="DAL.Entities.Oracle.Video"/>
+        <mapping class="DAL.Entities.Oracle.Reaction"/>
+        <mapping class="DAL.Entities.Oracle.Wall"/>
+        <mapping class="DAL.Entities.Oracle.Page"/>
+        <mapping class="DAL.Entities.Oracle.Group"/>
+
+    </session-factory>
+</hibernate-configuration>
